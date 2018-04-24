@@ -17,7 +17,9 @@ class GameScene: SKScene {
     private let player = Player()
     private var projectileList: [Projectile] = []
     private var playerRocketList: [Rocket] = []
-    private var killCount: Int = 0
+    private var killCount: Int = Values.killCount
+    
+    
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -49,6 +51,8 @@ class GameScene: SKScene {
         addChild(player)                                                                //adding the spaceship to the scene
         player.position = Values.playerStartPosition                                    //positioning the spaceship to spawn on the centre of the leftmost corner
         player.setScale(Values.playerScale)                                             //scale the spaceship down
+        
+        
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.02
@@ -88,14 +92,16 @@ class GameScene: SKScene {
         player.position.y = pos.y
         
         if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position.y = pos.y
+            n.position.y = pos.y + 20
             n.strokeColor = SKColor.yellow
             self.addChild(n)
   
             //limiting the Y of the thrusters to match the ships
-            if(n.position.y > Values.maxY){n.position.y = Values.maxY}
-            if(n.position.y < Values.minY){n.position.y = Values.minY}
+            //if(n.position.y > Values.maxY){n.position.y = Values.maxY}
+            //if(n.position.y < Values.minY){n.position.y = Values.minY}
         }
+        
+        //player.didMove = true
         
         //moving the ship to match the touch movement
         //player.position.y = pos.y
@@ -177,7 +183,7 @@ class GameScene: SKScene {
     @objc func Thruster()
     {
         if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position.y = player.position.y
+            n.position.y = player.position.y + 20
             n.strokeColor = SKColor.yellow
             self.addChild(n)
         }
@@ -230,7 +236,15 @@ class GameScene: SKScene {
     {
         // Called before each frame is rendered
         //super.update(currentTime)
-      
+        player.update(currentTime)
+        
+        
+        let label = SKLabelNode(fontNamed: "Chalkduster")
+        label.text = "\(killCount)"
+        label.fontSize = 80
+        label.fontColor = SKColor.white
+        label.position = CGPoint(x: size.width/2, y: 1400)
+        addChild(label)
         
         //limiting the spaceship from going too high and too low on the screen
         //if(player.position.y < Values.minY){player.position.y = Values.minY}
@@ -293,6 +307,10 @@ class GameScene: SKScene {
                     plane.cleanUp()
                     projectile.cleanUp()
                     
+                    //Sound effect for collision
+                    run(SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: false))
+                    
+                    
                     planes.remove(at: planes.index(of: plane)!)
                     projectileList.remove(at: projectileList.index(of: projectile)!)
                     killCount += 1
@@ -307,6 +325,11 @@ class GameScene: SKScene {
                 {
                     plane.cleanUp()
                     rocket.cleanUp()
+                    
+                    //Sound effect for rockets
+                    run(SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: false))
+                    
+                    
                     
                     planes.remove(at: planes.index(of: plane)!)
                     playerRocketList.remove(at: playerRocketList.index(of: rocket)!)

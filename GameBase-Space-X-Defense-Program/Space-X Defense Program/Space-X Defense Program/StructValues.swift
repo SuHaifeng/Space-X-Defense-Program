@@ -19,7 +19,7 @@ extension GameScene {
         
         //Spaceship (Player)
         static let playerStartPosition = CGPoint(x: 220, y: 800)
-        static let playerScale : CGFloat = 0.6
+        static let playerScale : CGFloat = 3
         static let minY: CGFloat = 313
         static let maxY: CGFloat = 1228
         
@@ -29,6 +29,9 @@ extension GameScene {
         
         //Rockets
         static let rocketScale : CGFloat = 0.4
+        
+        //values
+        static let killCount: Int = 0 
     }
 }
 
