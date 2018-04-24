@@ -246,6 +246,8 @@ class GameScene: SKScene {
         label.position = CGPoint(x: size.width/2, y: 1400)
         addChild(label)
         
+        ////sdjshdshdshshdsdsd
+        
         //limiting the spaceship from going too high and too low on the screen
         //if(player.position.y < Values.minY){player.position.y = Values.minY}
         //if(player.position.y > Values.maxY){player.position.y = Values.maxY}
