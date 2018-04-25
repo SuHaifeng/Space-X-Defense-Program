@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    private let background = SKSpriteNode(imageNamed: "background")
+    private let background = SKSpriteNode(imageNamed: "wall2.jpg")
     
     //player
     private let player = Player()
@@ -244,7 +244,17 @@ class GameScene: SKScene {
         label.fontSize = 80
         label.fontColor = SKColor.white
         label.position = CGPoint(x: size.width/2, y: 1400)
+        //label.position.y += 10
         addChild(label)
+        
+        
+        label.run(SKAction.sequence([SKAction.wait(forDuration: 0.05),                                //0.5 default i think
+            SKAction.fadeOut(withDuration: 0.2),                             //0.5 default
+            SKAction.removeFromParent()]))
+        //let actionMove =
+        //let actionMoveDone = SKAction.removeFromParent()
+        //label.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
         
         ////sdjshdshdshshdsdsd
         
